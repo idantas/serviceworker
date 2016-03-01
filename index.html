@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html>
+<head lang="en">
+    <style>
+        h1,h3{padding: .5rem 1rem;margin: .5rem;background-color: #4CC5D2;color: #fff;cursor: pointer;max-width: 200px;border-radius: 3px;font-size: 1rem;text-transform: capitalize;text-align: center;transition: all .2s;float: left;}
+        h3{    background: #EF6868;}
+        h3:hover{ background: #ba5454;}
+        h1:hover{background-color: #44afbc }
+    </style>
+    <script>
+
+        var out=document.querySelector('div');
+        function register() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js', {scope: './'}).then(function(registration) {
+                    out.textContent = 'succeeded';
+                    console.log(registration);
+                }).catch(function(error) {
+                    out.textContent = 'error';
+                    console.log(error);
+
+                });
+            } else {
+                // The current browser doesn't support service workers.
+                var aElement = document.createElement('a');
+                aElement.href = 'http://www.chromium.org/blink/serviceworker/service-worker-faq';
+                aElement.textContent = 'unavailable';
+                out.appendChild(aElement);
+            }
+        }
+
+        function unregister() {
+            registration.unregister()
+                    .then(function() {
+                        console.log('unregistered');
+                    }).catch(function(whut) {
+                        console.error('uh oh... ',whut);
+                        out.innerHTML="error ao cancelar registro";
+                    });
+        }
+
+
+
+    </script>
     <meta charset="UTF-8">
-    <title>Serviceworker by idantas</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-      <style>
-          h1,h3{padding: .5rem 1rem;margin: .5rem;background-color: #4CC5D2;color: #fff;cursor: pointer;max-width: 200px;border-radius: 3px;font-size: 1rem;text-transform: capitalize;text-align: center;transition: all .2s;float: left;}
-          h3{    background: #EF6868;}
-          h3:hover{ background: #ba5454;}
-          h1:hover{background-color: #44afbc }
-      </style>
-      <script>
-
-          var out=document.querySelector('div');
-          function register() {
-              if('serviceWorker' in navigator){
-                  navigator.serviceWorker.register('service-worker.js')
-                          .then(function(r) {
-                              console.log('registered: ',r);
-                              out.innerHTML='resgistrado';
-                          })
-                          .catch(function(whut) {
-                              console.error('uh oh... ',whut);
-                              out.innerHTML="error ao registrar";
-                          });
-              }
-          }
-
-          function unregister() {
-              registration.unregister()
-                      .then(function() {
-                          console.log('unregistered');
-                      }).catch(function(whut) {
-                          console.error('uh oh... ',whut);
-                          out.innerHTML="error ao cancelar registro";
-                      });
-          }
-
-
-
-      </script>
-  </head>
-  <body>
-  <h1 onclick="register()">Registrar</h1>
-  <h3 onclick="unregister()">unregister</h3>
-  <div></div>
-  </body>
+    <title></title>
+</head>
+<body>
+<h1 onclick="register()">Registrar</h1>
+<h3 onclick="unregister()">unregister</h3>
+<div></div>
+</body>
 </html>
